@@ -1,22 +1,22 @@
 <?php
 
+namespace app\engine;
+
 class Autoload
 {
-    private $path = [
-      'model',
-      'engine',
-      'interfaces'
-    ];
 
-    public function loadClass($className) {
-        foreach ($this->path as $path) {
+    public function loadClass($className)
+    {
+        $className = str_replace('\\', '/', $className);
+        $className = str_replace('app/', '../', $className);
 
-            $fileName = "../{$path}/{$className}.php";
-            //var_dump($fileName);
-            if (file_exists($fileName)) {
-                include $fileName;
-                break;
-            }
+
+
+        $fileName = $className . ".php";
+        var_dump($fileName);
+
+        if (file_exists($fileName)) {
+            include $fileName;
         }
 
 

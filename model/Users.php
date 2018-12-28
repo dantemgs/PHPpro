@@ -1,5 +1,6 @@
 <?php
 
+namespace app\model;
 
 class Users extends Model
 {
@@ -11,7 +12,5 @@ class Users extends Model
     {
         return "users";
     }
-
-
 
 }

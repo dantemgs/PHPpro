@@ -1,5 +1,9 @@
 <?php
 
+namespace app\model;
+use app\interfaces\IModel as IModel;
+use app\engine\Db as Db;
+
 abstract class Model implements IModel
 {
     protected $db;
