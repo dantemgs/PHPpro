@@ -15,7 +15,7 @@ abstract class Model
     public function getOne($id) {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE idx = :id";
-        return $this->db->queryOne($sql, [":id" => $id]);
+        return $this->db->queryObj($sql, [":idx" => $id], static::class);
     }
 
     public function getAll() {

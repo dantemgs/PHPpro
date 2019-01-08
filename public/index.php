@@ -8,7 +8,7 @@ include "../engine/Autoload.php";
 spl_autoload_register([new Autoload(), 'loadClass']);
 
 
-$product = new Products();
+$product = new Products(null,'Шоколадка', 'Это шоколадка', '100');
 
 
 var_dump($product->getOne(2));
