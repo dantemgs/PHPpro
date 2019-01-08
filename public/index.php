@@ -1,17 +1,14 @@
 <?php
-use app\engine\Autoload as Autoload;
-use app\engine\Db as Db;
-use app\model\Model as Model;
-use app\model\Products as Products;
-use app\model\Users as Users;
-use app\model\Basket as Basket;
+use app\engine\Autoload;
+use app\model\Products;
 
 
 include "../engine/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
-$product = new Products(new Db());
+
+$product = new Products();
 
 
-var_dump($product);
+var_dump($product->getOne(2));
