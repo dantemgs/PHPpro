@@ -46,8 +46,13 @@ class Db
     private function query($sql, $params = []) {
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
-        //В $statement будет в виде объекта результат выполнения запроса
         return $statement;
+    }
+
+    public function queryObject($sql, $params, $class) {
+        $statement = $this->query($sql, $params);
+        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
+        return $statement->fetch();
     }
 
     public function execute($sql, $params = []) {
@@ -59,16 +64,18 @@ class Db
         return $this->queryAll($sql, $param)[0];
     }
 
-    public function queryAll($sql, $param) {
+    public function queryAll($sql, $param = []) {
         return $this->query($sql, $param)->fetchAll();
         //fetchAll() вернет нам в виде ассоциотивного массива результаты запроса
     }
 
-    private function queryObj($sql, $params, $class) {
-        $statement = $this->query($sql,$params);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
-        //В $statement будет в виде объекта результат выполнения запроса
-        return $statement->fetch();
+    public function __toString()
+    {
+        return "Db";
+    }
+
+    public function lastInsertId() {
+        return $this->connection->lastInsertId();
     }
 
 }

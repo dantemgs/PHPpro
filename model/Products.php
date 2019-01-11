@@ -1,7 +1,7 @@
 <?php
 namespace app\model;
 
-class Products extends Model
+class Products extends DbModel
 {
     public $idx;
     public $name;
@@ -10,21 +10,22 @@ class Products extends Model
 
     /**
      * Products constructor.
-     * @param $id
+     * @param $idx
      * @param $name
      * @param $description
      * @param $price
      */
-    public function __construct($id, $name, $description, $price)
+    public function __construct($idx = null, $name = null, $description = null, $price = null)
     {
-        $this->idx = $id;
+        parent::__construct();
+        $this->idx = $idx;
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
     }
 
 
-    public function getTableName()
+    public static function getTableName()
     {
         return "products";
     }

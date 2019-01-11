@@ -2,13 +2,23 @@
 use app\engine\Autoload;
 use app\model\Products;
 
+/**
+ * @var Products $product
+ */
 
+include "../config/config.php";
 include "../engine/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
+$controllerName = $_GET['c'] ?: 'product';
 
-$product = new Products(null,'Шоколадка', 'Это шоколадка', '100');
+$actionName = $_GET['a'];
 
+$controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 
-var_dump($product->getOne(2));
+if (class_exists($controllerClass)) {
+    $controller = new $controllerClass();
+    $controller->runAction($actionName);
+}
+
