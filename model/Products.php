@@ -3,7 +3,7 @@ namespace app\model;
 
 class Products extends Model
 {
-    public $id;
+    public $idx;
     public $name;
     public $description;
     public $price;
@@ -17,7 +17,7 @@ class Products extends Model
      */
     public function __construct($id, $name, $description, $price)
     {
-        $this->id = $id;
+        $this->idx = $id;
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
