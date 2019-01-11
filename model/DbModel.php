@@ -1,6 +1,9 @@
 <?php
+
 namespace app\model;
+
 use app\engine\Db;
+
 /**
  * @var Db
  */
@@ -14,45 +17,49 @@ abstract class DbModel extends Models
         $this->db = Db::getInstance();
     }
 
-    public static function getOne($id) {
+    public static function getOne($id)
+    {
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} WHERE idx = :id";
+//        var_dump(Db::getInstance()->queryObject($sql, [":id" => $id], static::class));
         return Db::getInstance()->queryObject($sql, [":id" => $id], static::class);
     }
 
-    public function getAll() {
-        $tableName = $this->getTableName();
+    public static function getAll()
+    {
+        $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName}";
-        return $this->db->queryAll($sql);
+//        var_dump(Db::getInstance()->queryAll($sql));
+        return Db::getInstance()->queryAll($sql);
     }
 
     public function delete()
     {
-        $tableName = static ::getTableName();
+        $tableName = static::getTableName();
         $sql = "DELETE FROM {$tableName} WHERE idx = :id";
         return $this->db->execute($sql, [":id" => $this->idx]);
     }
 
-    public function insert()
+    public function insert($operation = 'INSERT')
     {
         $params = [];
         $colums = [];
 
         foreach ($this as $key => $value) {
-           if ($key == "db" || $key == "idx") continue;
-           $colums[] = "`$key`";
-           $params[":{$key}"] = $value;
+            if ($key == "db" || $key == "idx") continue;
+            $colums[] = "`$key`";
+            $params[":{$key}"] = $value;
         }
 
         $colums = implode(", ", $colums);
         $value = implode(", ", array_keys($params));
 
-        $tableName = static :: getTableName();
-       $sql = "INSERT INTO {$tableName} ({$colums}) VALUES ({$value})";
+        $tableName = static:: getTableName();
+        $sql = "{$operation} INTO {$tableName} ({$colums}) VALUES ({$value})";
 
-       $this->db->execute($sql, $params);
+        $this->db->execute($sql, $params);
 
-       $this->idx = $this->db->lastInsertId();
+        $this->idx = $this->db->lastInsertId();
     }
 
     public function save()
@@ -66,11 +73,8 @@ abstract class DbModel extends Models
 
     public function update()
     {
-        //TODO изменить данные
-        //если успеете, хотя бы подумать
-        //это уже если совсем все что выше просто и понятно
+        $this->insert('UPDATE');
     }
-
 
 
     abstract static public function getTableName();
