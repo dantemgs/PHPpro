@@ -2,6 +2,8 @@
 namespace app\engine;
 use app\traits\Tsingletone;
 
+
+
 class Db
 {
     use Tsingletone;
@@ -11,7 +13,7 @@ class Db
         'host' => 'localhost',
         'login' => 'root',
         'password' => '',
-        'database' => 'shop',
+        'database' => 'shops',
         'charset' => 'utf8'
     ];
 

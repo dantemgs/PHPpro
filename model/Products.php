@@ -8,6 +8,7 @@ class Products extends DbModel
     public $description;
     public $price;
 
+
     /**
      * Products constructor.
      * @param $idx

@@ -9,23 +9,17 @@ class ProductController extends Controller
 {
 
 
-    public function actionIndex()
-    {
-        echo "catalog";
+    public function actionIndex() {
+        $products = Products::getAll();
+       // var_dump($products);
+        echo $this->render('catalog', ['products' => $products]);
     }
 
-    public function actionCard()
-    {
+    public function actionCard() {
+
         $id = $_GET['id'];
-        $product = ($id !== 'all') ? Products::getOne($id) : Products::getAll();
-//        Products::getOne(5);
-        if (is_array($product)) {
-            foreach ($product as $one_prpsuct) {
-                echo $this->render('card', ['product' => (object)$one_prpsuct]);
-            }
-        } else {
-            echo $this->render('card', ['product' => $product]);
-        }
+        $product = Products::getOne($id);
+        echo $this->render('card', ['product' => $product]);
     }
 
 
