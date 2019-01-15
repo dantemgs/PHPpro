@@ -1,6 +1,7 @@
 <?php
 use app\engine\Autoload;
 use app\model\Products;
+use app\engine\TwigRender;
 
 /**
  * @var Products $product
@@ -8,6 +9,7 @@ use app\model\Products;
 
 include "../config/config.php";
 include "../engine/Autoload.php";
+require_once '../vendor/autoload.php';
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
@@ -18,7 +20,7 @@ $actionName = $_GET['a'];
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
 
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new \app\engine\Render());
+    $controller = new $controllerClass(new TwigRender());
     $controller->runAction($actionName);
 }
 
